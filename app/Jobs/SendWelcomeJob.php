@@ -11,25 +11,25 @@ class SendWelcomeJob implements ShouldQueue
 {
     use Queueable;
 
-    public int $tries = 5;
-//    public int $backoff = 10;
+    public int $tries = 3;
+    public int $backoff = 10;
 
-    public function backoff(): array
-    {
-//        return [5,10,20,30];
-
-        $times=[];
-        $delay= 1;
-
-        for ($i=0; $i < $this->tries; $i++)
-        {
-            $times[] = min($delay, 60);
-
-            $delay *= 4;
-        }
-
-        return $times;
-    }
+//    public function backoff(): array
+//    {
+////        return [5,10,20,30];
+//
+//        $times=[];
+//        $delay= 1;
+//
+//        for ($i=0; $i < $this->tries; $i++)
+//        {
+//            $times[] = min($delay, 60);
+//
+//            $delay *= 4;
+//        }
+//
+//        return $times;
+//    }
     /**
      * Create a new job instance.
      */
