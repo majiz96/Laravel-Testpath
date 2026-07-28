@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserRegistered;
 use App\Jobs\SendWelcomeJob;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,7 @@ class QueueTest extends Controller
     {
         $request->validate(['name'=>'required|string|max:255']);
 
-        SendWelcomeJob::dispatch($request->name);
+        event(new UserRegistered($request->name));
 
         return back()->with(['success','You have sent successfully']);
     }
