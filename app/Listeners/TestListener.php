@@ -2,12 +2,12 @@
 
 namespace App\Listeners;
 
-use App\Events\UserRegistered;
+use App\Events\TestEvent;
 use App\Jobs\SendWelcomeJob;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class SendWelcomeEmail
+class TestListener
 {
     /**
      * Create the event listener.
@@ -20,10 +20,8 @@ class SendWelcomeEmail
     /**
      * Handle the event.
      */
-    public function handle(UserRegistered $event): void
+    public function handle(TestEvent $event): void
     {
-        //
-//        logger("User Registered: {$event->name}");
         dispatch(new SendWelcomeJob($event->name));
     }
 }

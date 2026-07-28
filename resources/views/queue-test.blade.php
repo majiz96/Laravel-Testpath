@@ -3,10 +3,10 @@
 <head>
     <title>Queue Test</title>
 </head>
-<body>
+<body bgcolor="{{ session('color', 'black') }}">
 
 @if(session('success'))
-    <p>{{ session('success') }}</p>
+    <p style="background: white">{{ session('success') }}</p>
 @endif
 
 <form method="POST">
@@ -22,6 +22,7 @@
     </button>
 
 </form>
+
 
 </body>
 </html>
