@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QueueTest;
+use App\Livewire\Dashboard\Home;
+use App\Livewire\Test;
 
 use App\Jobs\SendWelcomeJob;
 
@@ -11,3 +13,5 @@ Route::get('/', function () {
 
 Route::get('queue-test', [QueueTest::class, 'index']);
 Route::post('queue-test',[QueueTest::class, 'send']);
+Route::get('home', Home::class)->name('home');
+Route::get('test', Test::class)->name('test');
