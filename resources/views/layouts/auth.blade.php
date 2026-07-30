@@ -9,7 +9,17 @@
     </head>
     <body class="bg-dark auth-wrapper">
 
-    {{ $slot }}
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-7">
+
+                {{ $slot }}
+
+            </div>
+        </div>
+    </div>
 
     </body>
 </html>
+
+
