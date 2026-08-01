@@ -1,14 +1,7 @@
 <div class="container rounded-4 py-2 px-3 bg-black">
     {{-- Simplicity is the ultimate sophistication. - Leonardo da Vinci --}}
 
-    <div class="row border rounded w-25 mx-auto p-2">
-        <div class="col-auto">Hello</div>
-        <div class="col-auto text-danger">World</div>
-
-    </div>
-    <div class="row border rounded mt-5 mx-auto p-2">
-
-
+    <div class="row border rounded-4 my-5 mx-auto p-2">
 
         @auth
 
@@ -32,6 +25,10 @@
                 <input type="text" class="col-2">
             @endif
 
+            <div class="col-auto text-success fw-bold">
+                {{$stats}}
+            </div>
+
         @endauth
 
         @guest
@@ -43,6 +40,60 @@
                     Register
                 </a>
         @endguest
+
+        <div class="row my-5 mx-auto">
+
+            <button type="button" class="btn btn-primary w-auto" wire:click="sayWelcome">
+                say welcome
+            </button>
+
+            <button type="button" class="btn btn-warning w-auto mx-3" wire:click="sayWelcomeLater">
+                say welcome later
+            </button>
+
+        </div>
+
+            <form class="row my-3 mx-auto" wire:submit.prevent="sayWelcomeTo">
+
+                <label for="address" class="col-auto text-light">Send To</label>
+
+                <div class="col-3">
+                    <input type="email" name="address" class="form-control" placeholder="destination..." wire:model="destination">
+                </div>
+
+                <button type="submit" class="btn btn-info w-auto mx-3">
+                    say welcome to ...
+                </button>
+
+            </form>
+
+        <div class="row my-5 mx-auto text-light">
+
+            <h3>Messages</h3>
+
+            @if($unread->isNotEmpty())
+                @foreach($unread as $notification)
+
+                    <div class="row p-2 my-2 mx-auto border rounded d-flex">
+                        <div class="col-auto">{{ $notification->data['message']}}</div>
+                        <div class="col-auto flex-fill"></div>
+
+                        <div class="col-auto">
+                            <button class="btn btn-sm btn-success" wire:click="markAsRead('{{$notification->id}}')"> read </button>
+                        </div>
+
+                    </div>
+
+                @endforeach
+            @else
+                <span class="text-danger"> No messages </span>
+            @endif
+
+            <span>
+                Unread: {{ $unread->count() }}
+            </span>
+
+        </div>
 
 
     </div>

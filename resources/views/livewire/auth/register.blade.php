@@ -43,14 +43,12 @@
         </button>
 
 
+    </form>
 
-
-</form>
-
-<div class="mx-auto">
-    <a href="{{route('login')}}" class="text-decoration-none">
-        already have account?
-    </a>
-</div>
+    <div class="mx-auto">
+        <a href="{{route('login')}}" class="text-decoration-none">
+            already have account?
+        </a>
+    </div>
 
 </div>

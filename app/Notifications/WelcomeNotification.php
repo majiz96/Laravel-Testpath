@@ -3,11 +3,11 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
+ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class WelcomeNotification extends Notification
+class WelcomeNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -26,7 +26,10 @@ class WelcomeNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return [
+            'mail',
+            'database'
+        ];
     }
 
     /**
@@ -35,9 +38,10 @@ class WelcomeNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+            ->subject('Welcome')
+            ->greeting('Hello!')
+            ->line('Welcome to your new account.')
+            ->line('Click the button below to log in.');
     }
 
     /**
@@ -47,8 +51,10 @@ class WelcomeNotification extends Notification
      */
     public function toArray(object $notifiable): array
     {
-        return [
+        return
+            [
             //
+                'message' => 'Welcome to your new application.',
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Livewire\Auth;
 
 
+use App\Notifications\WelcomeNotification;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
@@ -36,11 +37,14 @@ class Register extends Component
 
         event(new Registered($user));
 
+        $user->notify(new WelcomeNotification());
+
         Auth::login($user);
 
         session()->regenerate();
 
-        return redirect()->route('verification.notice');
+//        return redirect()->route('verification.notice');\
+
 
     }
     public function render()
