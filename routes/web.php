@@ -8,6 +8,7 @@ use App\Livewire\Test;
 
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
+use App\Livewire\Auth\VerifyEmail;
 
 use App\Jobs\SendWelcomeJob;
 

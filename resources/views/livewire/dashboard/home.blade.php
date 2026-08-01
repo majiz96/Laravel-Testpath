@@ -1,4 +1,4 @@
-<div class="container-fluid bg-black">
+<div class="container rounded-4 py-2 px-3 bg-black">
     {{-- Simplicity is the ultimate sophistication. - Leonardo da Vinci --}}
 
     <div class="row border rounded w-25 mx-auto p-2">

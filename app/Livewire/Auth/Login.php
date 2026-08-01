@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Auth;
 
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Illuminate\Http\RedirectResponse;
@@ -24,7 +25,16 @@ class Login extends Component
         if (auth()->attempt($credentials,$this->remember))
         {
             request()->session()->regenerate();
-            return redirect()->intended(config('fortify.home'));
+
+            if(Auth::user()->hasVerifiedEmail())
+            {
+                return redirect()->intended(config('fortify.home'));
+            }
+            else
+            {
+                return redirect()->route('verification.notice');
+            }
+
         }
 
         $this->addError('email', __('auth.failed'));
@@ -33,7 +43,6 @@ class Login extends Component
 
     public function render()
     {
-        return view('livewire.auth.login')
-            ->layout('layouts.auth');
+        return view('livewire.auth.login')->layout('layouts.auth');
     }
 }

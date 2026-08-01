@@ -220,7 +220,7 @@
 {{--            <div class="h-14.5 hidden lg:block"></div>--}}
 {{--        @endif--}}
 
-    <livewire:test></livewire:test>
+    <livewire:dashboard.home></livewire:dashboard.home>
 
     </body>
 </html>
