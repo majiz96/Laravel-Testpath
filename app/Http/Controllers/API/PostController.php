@@ -15,11 +15,9 @@ class PostController extends Controller
 
     public function index()
     {
-//        return [
-//          'message' => 'Posts API',
-//        ];
+        $perPage = min(request('perPage', 5), 100);
 
-        return PostResource::collection(Post::paginate(5));
+        return PostResource::collection(Post::paginate($perPage));
     }
 
     public function show(Post $post)
