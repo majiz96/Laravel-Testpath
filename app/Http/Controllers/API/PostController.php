@@ -13,11 +13,19 @@ class PostController extends Controller
 {
     //
 
-    public function index()
+    public function index(Request $request)
     {
-        $perPage = min(request('perPage', 5), 100);
+        $posts = Post::query();
 
-        return PostResource::collection(Post::paginate($perPage));
+        if ($request->has('search'))
+        {
+            $posts->where("title", "like", "%{$request->search}%")
+                  ->orWhere("body", "like", "%{$request->search}%");
+        }
+
+        $perPage = min($request->perPage ?? 5, 100);
+
+        return PostResource::collection($posts->paginate($perPage));
     }
 
     public function show(Post $post)
