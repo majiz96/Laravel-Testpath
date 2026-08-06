@@ -11,10 +11,10 @@ class AssertionTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function test_example(): void
+    public function test_assert_true()
     {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
+        $this->assertTrue(true);
+//        $this->assertTrue(false); => Failure
     }
+
 }
