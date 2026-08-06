@@ -19,9 +19,14 @@ Route::get('/', function () {
 Route::get('queue-test', [QueueTest::class, 'index']);
 Route::post('queue-test',[QueueTest::class, 'send']);
 Route::get('home', Home::class)->name('home');
-Route::get('test', Test::class)->name('test');
+//Route::get('test', Test::class)->name('test');
 
 Route::middleware('guest')->group(function () {
     Route::get('login', Login::class)->name('login');
     Route::get('register', Register::class)->name('register');
+});
+
+
+Route::get('/test', function () {
+    return 'Hello Test Laravel';
 });
