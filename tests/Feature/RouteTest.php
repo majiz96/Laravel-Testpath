@@ -2,12 +2,14 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class RouteTest extends TestCase
 {
+    use RefreshDatabase, WithFaker;
     /**
      * A basic feature test example.
      */
@@ -30,6 +32,13 @@ class RouteTest extends TestCase
         $response->assertOk('Hello Test');
 
 //        assertOk == assertStatus(200)
+    }
+
+    public function test_authenticated_user_can_access_route()
+    {
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)->get('/home');
+        $response->assertOk();
     }
 
 
