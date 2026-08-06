@@ -41,5 +41,10 @@ class RouteTest extends TestCase
         $response->assertOk();
     }
 
+    public function test_guests_can_not_access_route()
+    {
+        $response = $this->get('/home');
+        $response->assertRedirect('/login');
+    }
 
 }
