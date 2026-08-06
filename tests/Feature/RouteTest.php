@@ -23,4 +23,14 @@ class RouteTest extends TestCase
         $response = $this->get('/test');
         $response->assertSee('Hello Test');
     }
+    public function test_the_message_is_visible_and_ok()
+    {
+        $response = $this->get('/testOk');
+        $response->assertSee('Hello Test');
+        $response->assertOk('Hello Test');
+
+//        assertOk == assertStatus(200)
+    }
+
+
 }

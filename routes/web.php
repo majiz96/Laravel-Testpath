@@ -30,3 +30,6 @@ Route::middleware('guest')->group(function () {
 Route::get('/test', function () {
     return 'Hello Test Laravel';
 });
+Route::get('/testOk', function () {
+    return response('Hello Test Laravel',500);
+});
