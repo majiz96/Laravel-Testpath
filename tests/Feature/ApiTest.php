@@ -20,4 +20,16 @@ class ApiTest extends TestCase
     {
         $this->getJson('/api/profile')->assertUnauthorized();
     }
+
+    public function test_user_can_create_a_post()
+    {
+       $user = User::factory()->create();
+
+       $response = $this->actingAs($user)->postJson('/api/posts',
+           ['title' => 'Test title',
+               'body' => 'Test body The body field is required and at least thirty character should be'
+           ]);
+
+       $response->assertCreated();
+    }
 }
