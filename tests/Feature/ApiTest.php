@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -43,6 +44,27 @@ class ApiTest extends TestCase
 
         $response->assertUnprocessable();
         $response->assertJsonValidationErrorFor('title');
+    }
+
+    public function test_can_get_posts(): void
+    {
+        Post::factory()->count(3)->create();
+
+        $response = $this->getJson('/api/posts');
+
+        $response->assertOk();
+
+        $response->assertJsonCount(3, 'data');
+
+        $response->assertJsonStructure([
+            'data' => [
+                '*' => [
+                    'id',
+                    'title',
+                    'body',
+                ]
+            ]
+        ]);
     }
 
 }
