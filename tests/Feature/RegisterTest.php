@@ -40,7 +40,7 @@ class RegisterTest extends TestCase
 
         $this->assertDatabaseMissing('users', ['email'=>'test@mail.com']);
     }
-    public function test_the_register_password_validation2()
+    public function test_the_register_password_validation3()
     {
         Notification::fake();
 
@@ -52,6 +52,18 @@ class RegisterTest extends TestCase
             ->call('register');
 
         $this->assertDatabaseHas('users', ['email'=>'test@mail.com']);
+    }
+
+    public function test_register_reject_short_password()
+    {
+        Notification::fake();
+        Livewire::test(Register::class)
+            ->set('name', 'Test')
+            ->set('email','test@mail.com')
+            ->set('password', 'Abc')
+            ->set('password_confirmation', 'Abc')
+            ->call('register')
+            ->assertHasErrors(['password']);
     }
 
 }
