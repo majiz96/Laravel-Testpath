@@ -17,10 +17,10 @@ class PostTest extends TestCase
 
         $response->assertOk();
     }
-    public function test_form_cannot_be_submitted_by_invalidated_data(): void
+    public function test_form_cannot_be_submitted_by_invalid_data(): void
     {
         $response = $this->post('post',['title'=>'Te']);
 
-        $response->assertStatus(302);
+        $response->assertSessionHasErrors('title');
     }
 }
