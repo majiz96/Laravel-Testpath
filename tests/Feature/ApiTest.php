@@ -16,4 +16,8 @@ class ApiTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user)->getJson('/api/profile')->assertOk();
     }
+    public function test_guest_cannot_go_to_profile_page()
+    {
+        $this->getJson('/api/profile')->assertUnauthorized();
+    }
 }
