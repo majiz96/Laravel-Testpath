@@ -32,4 +32,17 @@ class ApiTest extends TestCase
 
        $response->assertCreated();
     }
+
+    public function test_user_cannot_create_a_post_by_empty_title()
+    {
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)->postJson('/api/posts',
+        ['title' => '',
+            'body' => 'Test body The body field is required and at least thirty character should be'
+        ]);
+
+        $response->assertUnprocessable();
+        $response->assertJsonValidationErrorFor('title');
+    }
+
 }
