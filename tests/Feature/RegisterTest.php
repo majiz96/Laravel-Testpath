@@ -113,4 +113,17 @@ class RegisterTest extends TestCase
         Notification::assertSentTo($user,WelcomeNotification::class);
     }
 
+    public function test_user_can_register()
+    {
+        Notification::fake();
+        Livewire::test(Register::class)
+            ->set('name', 'Test')
+            ->set('email','test@mail.com')
+            ->set('password', 'Abc#123D')
+            ->set('password_confirmation', 'Abc#123D')
+            ->call('register');
+
+        $this->assertAuthenticated();
+    }
+
 }
