@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\Jobs\SendWelcomeJob;
+use App\Mail\TestWelcomeMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Queue;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -22,4 +24,16 @@ class QueueTest extends TestCase
         Queue::assertPushed(SendWelcomeJob::class);
     }
 
+    public function test_send_welcome_job_is_sending_mail()
+    {
+       Mail::fake();
+
+       $job = new SendWelcomeJob('Test');
+
+       $job->handle();
+
+       Mail::assertSent(TestWelcomeMail::Class , function($mail){
+           return $mail->hasTo('test@example.com');
+       });
+    }
 }
