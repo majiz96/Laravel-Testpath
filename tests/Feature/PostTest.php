@@ -11,10 +11,10 @@ class PostTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function test_example(): void
+    public function test_form_can_be_submitted(): void
     {
-        $response = $this->get('/');
+        $response = $this->post('post',['title'=>'Test Post']);
 
-        $response->assertStatus(200);
+        $response->assertOk();
     }
 }

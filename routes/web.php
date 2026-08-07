@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QueueTest;
+use App\Http\Controllers\PostController;
 
 use App\Livewire\Dashboard\Home;
 use App\Livewire\Test;
@@ -11,6 +12,7 @@ use App\Livewire\Auth\Register;
 use App\Livewire\Auth\VerifyEmail;
 
 use App\Jobs\SendWelcomeJob;
+use Tests\Feature\PostTest;
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,3 +35,5 @@ Route::get('/test', function () {
 Route::get('/testOk', function () {
     return response('Hello Test Laravel',500);
 });
+
+Route::post('post',[PostController::class, 'store']);
