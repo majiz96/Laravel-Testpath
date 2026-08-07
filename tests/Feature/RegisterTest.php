@@ -185,5 +185,22 @@ class RegisterTest extends TestCase
        Event::assertDispatched(Registered::class);
    }
 
+   public function test_event_can_email_is_correct()
+   {
+       Event::fake();
+       Notification::fake();
+
+       Livewire::test(Register::class)
+           ->set('name', 'Test')
+           ->set('email','someone@mail.com')
+           ->set('password', 'Abc#123D')
+           ->set('password_confirmation', 'Abc#123D')
+           ->call('register');
+
+       Event::assertDispatched(Registered::class, function (Registered $event) {
+           return $event->user->email === 'someone@mail.com';
+       });
+   }
+
 
 }
