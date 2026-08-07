@@ -52,4 +52,15 @@ class QueueTest extends TestCase
         $mail->assertSeeInHtml('Hello Test');
     }
 
+    public function test_mail_destination_address_is_correct()
+    {
+        Mail::fake();
+
+        Mail::to('someone@mail.com')->send(new TestSimpleMail());
+
+        Mail::assertSent(TestSimpleMail::class , function($mail){
+            return $mail->hasTo('someone@mail.com');
+        });
+    }
+
 }
