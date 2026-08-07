@@ -65,5 +65,17 @@ class RegisterTest extends TestCase
             ->call('register')
             ->assertHasErrors(['password']);
     }
+    public function test_register_reject_wrong_password_confirmation()
+    {
+        Notification::fake();
+        Livewire::test(Register::class)
+            ->set('name', 'Test')
+            ->set('email','test@mail.com')
+            ->set('password', 'Abc')
+            ->set('password_confirmation', 'Abc1')
+            ->call('register')
+            ->assertHasErrors(['password']);
+
+    }
 
 }
