@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use App\Notifications\WelcomeNotification;
 use Livewire\Livewire;
 use App\Livewire\Auth\Register;
 use Illuminate\Support\Facades\Notification;
@@ -94,6 +95,22 @@ class RegisterTest extends TestCase
             ->call('register')
             ->assertHasErrors(['email']);
 
+    }
+
+    public function test_register_send_notification()
+    {
+        Notification::fake();
+        Livewire::test(Register::class)
+            ->set('name', 'Test')
+            ->set('email','test@mail.com')
+            ->set('password', 'Abc#123D')
+            ->set('password_confirmation', 'Abc#123D')
+            ->call('register');
+
+        $user = User::where('email','test@mail.com')->first();
+
+        $this->assertNotNull($user);
+        Notification::assertSentTo($user,WelcomeNotification::class);
     }
 
 }
