@@ -140,4 +140,15 @@ class RegisterTest extends TestCase
         $this->assertGuest();
     }
 
+   public function test_redirect_after_logout()
+   {
+       $user = User::factory()->create();
+       $this->actingAs($user);
+
+       $component = Livewire::test(Home::class)->call('logout');
+
+       $component->assertRedirect(config('fortify.home'));
+
+   }
+
 }
