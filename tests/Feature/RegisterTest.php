@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Support\Facades\Event;
+use Illuminate\Auth\Events\Registered;
 use App\Livewire\Dashboard\Home;
 use App\Models\User;
 use App\Notifications\WelcomeNotification;
@@ -166,5 +168,22 @@ class RegisterTest extends TestCase
        $response = $this->actingAs($user)->get('/home');
        $response->assertOk();
    }
+
+   public function test_event_can_be_dispatched()
+   {
+       Event::fake();
+
+       Notification::fake();
+
+       Livewire::test(Register::class)
+           ->set('name', 'Test')
+           ->set('email','someone@mail.com')
+           ->set('password', 'Abc#123D')
+           ->set('password_confirmation', 'Abc#123D')
+           ->call('register');
+
+       Event::assertDispatched(Registered::class);
+   }
+
 
 }
