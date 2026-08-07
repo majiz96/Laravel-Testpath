@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Jobs\SendWelcomeJob;
 use App\Mail\TestWelcomeMail;
+use App\Mail\TestSimpleMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Queue;
 
@@ -36,4 +37,12 @@ class QueueTest extends TestCase
            return $mail->hasTo('test@example.com');
        });
     }
+
+    public function test_mail_subject_is_correct()
+    {
+        $mail = new TestSimpleMail();
+
+        $mail->assertHasSubject('Test Simple Mail');
+    }
+
 }
