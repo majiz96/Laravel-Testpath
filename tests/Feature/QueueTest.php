@@ -45,4 +45,11 @@ class QueueTest extends TestCase
         $mail->assertHasSubject('Test Simple Mail');
     }
 
+    public function test_mail_content_is_correct()
+    {
+        $mail = new TestSimpleMail();
+
+        $mail->assertSeeInHtml('Hello Test');
+    }
+
 }
