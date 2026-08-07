@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Livewire\Dashboard\Home;
 use App\Models\User;
 use App\Notifications\WelcomeNotification;
 use Livewire\Livewire;
@@ -124,6 +125,19 @@ class RegisterTest extends TestCase
             ->call('register');
 
         $this->assertAuthenticated();
+    }
+
+    public function test_user_can_logout()
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user);
+
+        $this->assertAuthenticated();
+
+        Livewire::test(Home::class)->call('logout');
+
+        $this->assertGuest();
     }
 
 }
