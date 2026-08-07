@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Livewire\Livewire;
 use App\Livewire\Auth\Register;
 use Illuminate\Support\Facades\Notification;
@@ -75,6 +76,23 @@ class RegisterTest extends TestCase
             ->set('password_confirmation', 'Abc1')
             ->call('register')
             ->assertHasErrors(['password']);
+
+    }
+    public function test_register_reject_duplicate_email()
+    {
+        Notification::fake();
+
+        User::factory()->create([
+           'email'=>'test@mail.com'
+        ]);
+
+        Livewire::test(Register::class)
+            ->set('name', 'Test')
+            ->set('email','test@mail.com')
+            ->set('password', 'Abcdefg1')
+            ->set('password_confirmation', 'Abcdefg1')
+            ->call('register')
+            ->assertHasErrors(['email']);
 
     }
 
