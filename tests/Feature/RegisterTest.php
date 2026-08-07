@@ -91,8 +91,8 @@ class RegisterTest extends TestCase
         Livewire::test(Register::class)
             ->set('name', 'Test')
             ->set('email','test@mail.com')
-            ->set('password', 'Abcdefg1')
-            ->set('password_confirmation', 'Abcdefg1')
+            ->set('password', 'Abc#123D')
+            ->set('password_confirmation', 'Abc#123D')
             ->call('register')
             ->assertHasErrors(['email']);
 
@@ -149,6 +149,13 @@ class RegisterTest extends TestCase
 
        $component->assertRedirect(config('fortify.home'));
 
+   }
+
+   public function test_guest_cannot_access_home()
+   {
+       $response = $this->get('/home');
+
+       $response->assertRedirect('/login');
    }
 
 }
