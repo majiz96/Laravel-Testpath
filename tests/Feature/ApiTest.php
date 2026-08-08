@@ -67,4 +67,15 @@ class ApiTest extends TestCase
         ]);
     }
 
+    public function test_can_show_a_post(): void
+    {
+        $post = Post::factory()->create();
+        $response = $this->getJson("/api/posts/{$post->id}");
+
+        $response->dump();
+
+        $response->assertOk();
+        $response->assertJsonStructure([ 'data' => ['id', 'title', 'body']]);
+    }
+
 }
