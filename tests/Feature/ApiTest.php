@@ -220,5 +220,26 @@ class ApiTest extends TestCase
         $response->assertUnauthorized();
     }
 
+    public function test_user_can_access_protected_route_with_token()
+    {
+        $user =User::factory()->create(
+            [
+                'email'=>'example@mail.com',
+                'password'=>bcrypt('Abc#123D'),
+            ]
+        );
+
+        $login = $this->postJson('/api/login',[
+            'email'=>'example@mail.com',
+            'password'=>'Abc#123D'
+        ]);
+
+        $token = $login->json('token');
+
+        $response = $this->withToken($token)->getJson('/api/profile');
+
+        $response->assertOk();
+    }
+
 
 }
