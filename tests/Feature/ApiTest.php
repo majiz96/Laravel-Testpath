@@ -267,5 +267,21 @@ class ApiTest extends TestCase
         $response->assertOk();
     }
 
+    public function test_user_can_logout(): void
+    {
+        $user = User::factory()->create();
+
+        $token = $user->createToken('test-token')->plainTextToken;
+
+        $response = $this->withToken($token)
+            ->postJson('/api/logout');
+
+        $response->assertOk();
+
+        $this->assertDatabaseMissing('personal_access_tokens', [
+            'tokenable_id' => $user->id,
+        ]);
+    }
+
 
 }
