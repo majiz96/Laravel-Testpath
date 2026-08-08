@@ -78,4 +78,22 @@ class ApiTest extends TestCase
         $response->assertJsonStructure([ 'data' => ['id', 'title', 'body']]);
     }
 
+    public function test_can_update_a_post(): void
+    {
+        $post = Post::factory()->create();
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user,'sanctum')->putJson("/api/posts/{$post->id}",[
+            'title' => 'Updated title',
+            'body' => 'Test body The body field is required and at least thirty character should be',
+        ]);
+
+        $response->assertOk();
+
+        $this->assertDatabaseHas('posts', [
+            'title' => 'Updated title',
+            'body' => 'Test body The body field is required and at least thirty character should be',
+        ]);
+    }
+
 }
