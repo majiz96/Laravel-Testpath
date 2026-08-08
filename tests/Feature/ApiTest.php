@@ -245,6 +245,26 @@ class ApiTest extends TestCase
     {
        $this->withToken('invalid-token')->getJson('/api/profile')->assertUnauthorized();
     }
+    public function test_authorized_user_cannot_access_profile_by_invalid_token()
+    {
+        $user =User::factory()->create(
+            [
+                'email'=>'example@mail.com',
+                'password'=>bcrypt('Abc#123D'),
+            ]
+        );
+
+        $login = $this->postJson('/api/login',[
+            'email'=>'example@mail.com',
+            'password'=>'Abc#123D'
+        ]);
+
+        $token = 'invalid-token';
+
+        $response = $this->withToken($token)->getJson('/api/profile');
+
+        $response->assertUnauthorized();
+    }
 
 
 }
