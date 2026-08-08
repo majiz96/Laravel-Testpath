@@ -166,5 +166,25 @@ class ApiTest extends TestCase
         $this->assertDatabaseHas('users', ['email' => 'new.user@mail.com']);
     }
 
+    public function test_cannot_register_by_existing_email()
+    {
+        User::create([
+            'name' => 'new-user',
+            'email' => 'existing@mail.com',
+            'password' => 'Abc#123D',
+            'created_at' => '01-01-2020',
+            ]);
+
+        $response = $this->postJson('/api/register',[
+            'name' => 'new-user',
+            'email' => 'existing@mail.com',
+            'password' => 'Abc#123D',
+            'password_confirmation' => 'Abc#123D',
+        ]);
+
+        $response->assertUnprocessable();
+        $response->assertJsonValidationErrorFor('email');
+    }
+
 
 }
