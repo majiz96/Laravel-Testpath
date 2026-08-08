@@ -123,4 +123,17 @@ class ApiTest extends TestCase
 
     }
 
+    public function test_user_can_delete_a_post(): void
+    {
+        $post = Post::factory()->create();
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user,'sanctum')
+            ->deleteJson('/api/posts/' . $post->id);
+
+        $response->assertNoContent();
+
+        $this->assertDatabaseMissing('posts', ['id' => $post->id]);
+    }
+
 }
