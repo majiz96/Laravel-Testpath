@@ -108,4 +108,19 @@ class ApiTest extends TestCase
         $response->assertUnauthorized();
     }
 
+    public function test_user_cannot_update_a_post_by_invalid_data(): void
+    {
+        $post = Post::factory()->create();
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user,'sanctum')->putJson('/api/posts/' . $post->id, [
+            'title' => 'Updated title',
+            'body' => 'Test body',
+        ]);
+
+        $response->assertUnprocessable();
+        $response->assertJsonValidationErrorFor('body');
+
+    }
+
 }
