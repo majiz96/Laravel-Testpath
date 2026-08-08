@@ -203,5 +203,22 @@ class ApiTest extends TestCase
 
     }
 
+    public function test_user_cannot_login_with_invalid_password()
+    {
+        $user =User::factory()->create(
+            [
+                'email'=>'example@mail.com',
+                'password'=>bcrypt('Abc#123D'),
+            ]
+        );
+
+        $response = $this->postJson('/api/login',[
+            'email'=>'example@mail.com',
+            'password'=>'Abc#123C'
+        ]);
+
+        $response->assertUnauthorized();
+    }
+
 
 }
