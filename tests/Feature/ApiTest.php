@@ -241,5 +241,10 @@ class ApiTest extends TestCase
         $response->assertOk();
     }
 
+    public function test_invalid_token_cannot_access_profile()
+    {
+       $this->withToken('invalid-token')->getJson('/api/profile')->assertUnauthorized();
+    }
+
 
 }
