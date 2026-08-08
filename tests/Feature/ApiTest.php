@@ -143,4 +143,13 @@ class ApiTest extends TestCase
         $response->assertUnauthorized();
     }
 
+    public function test_cannot_delete_a_wrong_post(): void
+    {
+        $post = Post::factory()->create();
+        $user = User::factory()->create();
+        $response = $this->actingAs($user,'sanctum')
+            ->deleteJson('/api/posts/99');
+        $response->assertNotFound();
+    }
+
 }
