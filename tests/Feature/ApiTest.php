@@ -152,4 +152,19 @@ class ApiTest extends TestCase
         $response->assertNotFound();
     }
 
+    public function test_can_register()
+    {
+        $response = $this->postJson('/api/register',[
+            'name' => 'new-user',
+            'email' => 'new.user@mail.com',
+            'password' => 'Abc#123D',
+            'password_confirmation' => 'Abc#123D',
+        ]);
+
+        $response->assertCreated();
+
+        $this->assertDatabaseHas('users', ['email' => 'new.user@mail.com']);
+    }
+
+
 }
