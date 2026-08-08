@@ -136,4 +136,11 @@ class ApiTest extends TestCase
         $this->assertDatabaseMissing('posts', ['id' => $post->id]);
     }
 
+    public function test_guest_cannot_delete_a_post(): void
+    {
+        $post = Post::factory()->create();
+        $response = $this->deleteJson('/api/posts/' . $post->id);
+        $response->assertUnauthorized();
+    }
+
 }
