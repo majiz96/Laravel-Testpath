@@ -181,5 +181,27 @@ class ApiTest extends TestCase
         $response->assertJsonValidationErrorFor('email');
     }
 
+    public function test_can_login()
+    {
+        $user =User::factory()->create(
+            [
+                'email'=>'example@mail.com',
+                'password'=>bcrypt('Abc#123D'),
+            ]
+        );
+
+        $response = $this->postJson('/api/login',[
+            'email'=>'example@mail.com',
+             'password'=>'Abc#123D'
+        ]);
+
+        $response->assertOk();
+
+        $response->assertJsonStructure(['token']);
+
+        $this->assertAuthenticatedAs($user);
+
+    }
+
 
 }
