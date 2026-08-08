@@ -96,4 +96,16 @@ class ApiTest extends TestCase
         ]);
     }
 
+    public function test_guest_cannot_update_a_post(): void
+    {
+        $post = Post::factory()->create();
+
+        $response = $this->putJson('/api/posts/' . $post->id, [
+            'title' => 'Updated title',
+            'body' => 'Test body The body field is required and at least thirty character should be',
+        ]);
+
+        $response->assertUnauthorized();
+    }
+
 }
