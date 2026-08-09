@@ -39,4 +39,15 @@ class PostTest extends TestCase
         $response->assertJsonPath('meta.total', 12);
 
     }
+    public function test_posts_pagination_can_change(): void
+    {
+        Post::factory()->count(12)->create();
+
+        $response = $this->getJson('/api/posts?perPage=10');
+
+        $response->assertOk();
+
+        $response->assertJsonCount(10, 'data');
+        $response->assertJsonPath('meta.per_page', 10);
+    }
 }
