@@ -18,4 +18,11 @@ class DocumentController extends Controller
 
         return response()->json(['message' => 'Document updated successfully.'], 200);
     }
+
+    public function destroy(Document $document)
+    {
+        Gate::authorize('delete', $document);
+        $document->delete();
+        return response()->json([],204);
+    }
 }

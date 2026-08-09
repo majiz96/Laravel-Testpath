@@ -32,6 +32,7 @@ Route::middleware('auth:sanctum')->group(function(){
     });
 
     Route::put('documents/{document}',[DocumentController::class,'update']);
+    Route::delete('documents/{document}',[DocumentController::class,'destroy']);
 
 });
 
