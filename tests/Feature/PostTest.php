@@ -63,4 +63,14 @@ class PostTest extends TestCase
         $response->assertJsonPath('meta.current_page', 2);
         $response->assertJsonPath('meta.per_page', 10);
     }
+
+    public function test_posts_pagination_cannot_exceed_100(): void
+    {
+        Post::factory()->count(105)->create();
+        $response = $this->getJson('/api/posts?perPage=200');
+        $response->assertOk();
+
+        $response->assertJsonCount(100, 'data');
+        $response->assertJsonPath('meta.per_page', 100);
+    }
 }
