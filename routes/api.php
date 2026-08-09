@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\TeamsController;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\DocumentController;
 
 Route::get('/posts',[PostController::class,'index']);
 Route::get('/posts/{post}',[PostController::class,'show']);
@@ -29,6 +30,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::middleware('auth:sanctum')->get('/profile', function (Request $request) {
         return $request->user();
     });
+
+    Route::put('documents/{document}',[DocumentController::class,'update']);
 
 });
 

@@ -27,8 +27,28 @@ class DocumentTest extends TestCase
     public function test_other_users_cannot_update_document(): void
     {
         $user = User::factory()->create();
+
+        $otherUser = User::factory()->create();
+
+        $document = Document::factory()->create(['user_id' => $user->id]);
+
+        $this->assertFalse($otherUser->can('update', $document));
+    }
+
+    public function test_other_users_not_allowed_to_update_document(): void
+    {
+        $user = User::factory()->create();
         $otherUser = User::factory()->create();
         $document = Document::factory()->create(['user_id' => $user->id]);
-        $this->assertFalse($otherUser->can('update', $document));
+
+        $token = $otherUser->createToken('test-token')->plainTextToken;
+
+        $response = $this->withToken($token)
+            ->putJson("/api/documents/{$document->id}" , [
+                'title'=>'Document test title',
+                'body'=>'Document test body',
+            ]);
+
+        $response->assertForbidden();
     }
 }
