@@ -73,4 +73,25 @@ class PostTest extends TestCase
         $response->assertJsonCount(100, 'data');
         $response->assertJsonPath('meta.per_page', 100);
     }
+
+    public function test_posts_search(): void
+    {
+        Post::factory()->create([
+            'title'=>'First Post',
+            'body'=>'The Post is about cars'
+        ]);
+
+        Post::factory()->create([
+            'title'=>'Second Post',
+            'body'=>'The Post is about planes'
+        ]);
+
+        $response = $this->getJson('/api/posts?search=plane');
+
+        $response->assertOk();
+
+        $response->assertJsonCount(1, 'data');
+        $response->assertJsonPath('data.0.title', 'Second Post');
+
+    }
 }
