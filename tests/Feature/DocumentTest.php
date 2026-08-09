@@ -51,4 +51,25 @@ class DocumentTest extends TestCase
 
         $response->assertForbidden();
     }
+
+    public function test_user_allowed_to_update_document(): void
+    {
+        $user = User::factory()->create();
+        $document = Document::factory()->create(['user_id' => $user->id]);
+        $token = $user->createToken('test-token')->plainTextToken;
+
+        $response = $this->withToken($token)
+            ->putJson("/api/documents/{$document->id}" , [
+                'title'=>'Document test title',
+                'body'=>'Document test body',
+            ]);
+
+        $response->assertOk();
+
+        $this->assertDatabaseHas('documents', [
+            'id' => $document->id,
+            'title'=>'Document test title',
+            'body'=>'Document test body',
+        ]);
+    }
 }
