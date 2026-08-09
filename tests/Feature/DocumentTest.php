@@ -117,4 +117,23 @@ class DocumentTest extends TestCase
 
         $response->assertJsonValidationErrors('body');
     }
+
+    public function test_validation_error_has_correct_json_structure(): void
+    {
+        $user = User::factory()->create();
+        $document = Document::factory()->create(['user_id' => $user->id]);
+        $token = $user->createToken('test-token')->plainTextToken;
+
+        $response = $this->withToken($token)->putJson("/api/documents/{$document->id}");
+
+        $response->assertUnprocessable();
+
+        $response->assertJsonStructure([
+            'message',
+            'errors' => [
+                'title',
+                'body'
+            ]
+        ]);
+    }
 }
