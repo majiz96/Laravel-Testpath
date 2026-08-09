@@ -100,4 +100,21 @@ class DocumentTest extends TestCase
 
        $this->assertDatabaseMissing('documents', ['id' => $document->id]);
     }
+
+    public function test_user_cannot_update_document_by_invalid_data(): void
+    {
+        $user = User::factory()->create();
+        $document = Document::factory()->create(['user_id' => $user->id]);
+
+        $token = $user->createToken('test-token')->plainTextToken;
+
+        $response = $this->withToken($token)
+            ->putJson("/api/documents/{$document->id}" , [
+                'title'=>'Document test title'
+            ]);
+
+        $response->assertUnprocessable();
+
+        $response->assertJsonValidationErrors('body');
+    }
 }

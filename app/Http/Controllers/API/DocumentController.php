@@ -12,6 +12,11 @@ class DocumentController extends Controller
     //
     public function update(Document $document, Request $request)
     {
+        $request->validate([
+            'title' => 'required|string|min:3',
+            'body' => 'required|string|min:10',
+        ]);
+
         Gate::authorize('update', $document);
 
         $document->update($request->only(['title', 'body']));
