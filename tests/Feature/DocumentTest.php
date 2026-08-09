@@ -136,4 +136,12 @@ class DocumentTest extends TestCase
             ]
         ]);
     }
+
+    public function test_document_not_found(): void
+    {
+        $user = User::factory()->create();
+        $token = $user->createToken('test-token')->plainTextToken;
+        $response = $this->withToken($token)->putJson("/api/documents/99");
+        $response->assertNotFound();
+    }
 }
