@@ -50,4 +50,17 @@ class PostTest extends TestCase
         $response->assertJsonCount(10, 'data');
         $response->assertJsonPath('meta.per_page', 10);
     }
+
+    public function test_posts_pagination_can_be_on_different_pages(): void
+    {
+        Post::factory()->count(22)->create();
+
+        $response = $this->getJson('/api/posts?perPage=10&page=2');
+
+        $response->assertOk();
+
+        $response->assertJsonCount(10, 'data');
+        $response->assertJsonPath('meta.current_page', 2);
+        $response->assertJsonPath('meta.per_page', 10);
+    }
 }
