@@ -83,8 +83,21 @@ class DocumentTest extends TestCase
 
         $response = $this->withToken($token)->deleteJson("/api/documents/{$document->id}");
 
-       $response->assertForbidden();
+        $response->assertForbidden();
 
-       $this->assertDatabaseHas('documents', ['id' => $document->id]);
+        $this->assertDatabaseHas('documents', ['id' => $document->id]);
+    }
+    public function test_user_allowed_to_delete_document(): void
+    {
+        $user = User::factory()->create();
+        $document = Document::factory()->create(['user_id' => $user->id]);
+
+        $token = $user->createToken('test-token')->plainTextToken;
+
+        $response = $this->withToken($token)->deleteJson("/api/documents/{$document->id}");
+
+       $response->assertNoContent();
+
+       $this->assertDatabaseMissing('documents', ['id' => $document->id]);
     }
 }
