@@ -30,12 +30,12 @@ Artisan::command('inspire', function () {
 
 //Schedule::command(new TrainGenerateCommand())->everyMinute()->withoutOverlapping(); => WRONG WITH ARGUMENT
 
-//Schedule::command('train:generate 25')->everyMinute()->withoutOverlapping();
+Schedule::command('train:generate 25')->everyMinute()->withoutOverlapping();
 
 //Schedule::command('try-again:command 60 days')->everyMinute()->withoutOverlapping();
 
-Schedule::command('try-again:command 60 days')
-    ->everyFiveMinutes()
-    ->withoutOverlapping()
-    ->emailOutputTo('someoneForTesting@mail.com');
+//Schedule::command('try-again:command 60 days')
+//    ->everyFiveMinutes()
+//    ->withoutOverlapping()
+//    ->emailOutputTo('someoneForTesting@mail.com');
 
