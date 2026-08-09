@@ -94,4 +94,13 @@ class PostTest extends TestCase
         $response->assertJsonPath('data.0.title', 'Second Post');
 
     }
+    public function test_posts_search_have_no_result(): void
+    {
+        Post::factory()->count(3)->create();
+
+        $response = $this->getJson('/api/posts?search=something');
+
+        $response->assertOk();
+        $response->assertJsonCount(0, 'data');
+    }
 }
