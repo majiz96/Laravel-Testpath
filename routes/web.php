@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QueueTest;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\RedisTestController;
 
 use App\Livewire\Dashboard\Home;
 use App\Livewire\Test;
@@ -13,8 +14,6 @@ use App\Livewire\Auth\VerifyEmail;
 
 use App\Jobs\SendWelcomeJob;
 use Tests\Feature\PostTest;
-
-use Illuminate\Support\Facades\Cache;
 
 Route::get('/', function () {
     return view('welcome');
@@ -38,12 +37,4 @@ Route::get('/testOk', function () {
     return response('Hello Test Laravel',500);
 });
 
-Route::get('redis-test', function () {
-
-    $message = Cache::remember('redis-message', 60, function () {
-        return 'Hello Test Laravel';
-    });
-
-    return $message;
-
-});
+Route::get('redis-test',[RedisTestController::class,'index'])->name('redis-test');
