@@ -14,6 +14,8 @@ use App\Livewire\Auth\VerifyEmail;
 use App\Jobs\SendWelcomeJob;
 use Tests\Feature\PostTest;
 
+use Illuminate\Support\Facades\Cache;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -36,4 +38,13 @@ Route::get('/testOk', function () {
     return response('Hello Test Laravel',500);
 });
 
-Route::post('post',[PostController::class, 'store']);
+Route::get('redis-test', function () {
+    return
+    [
+        'put' => Cache::put('age',30),
+        'get' => Cache::get('age'),
+        'has' => Cache::has('age'),
+//        'forget' => Cache::forget('age'),
+//        'delete' => Cache::delete('age'),
+    ];
+});
