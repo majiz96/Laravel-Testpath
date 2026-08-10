@@ -39,12 +39,11 @@ Route::get('/testOk', function () {
 });
 
 Route::get('redis-test', function () {
-    return
-    [
-        'put' => Cache::put('age',30),
-        'get' => Cache::get('age'),
-        'has' => Cache::has('age'),
-//        'forget' => Cache::forget('age'),
-//        'delete' => Cache::delete('age'),
-    ];
+
+    $message = Cache::remember('redis-message', 60, function () {
+        return 'Hello Test Laravel';
+    });
+
+    return $message;
+
 });
