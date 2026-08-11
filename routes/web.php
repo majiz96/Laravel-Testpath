@@ -39,3 +39,4 @@ Route::get('/testOk', function () {
 });
 
 Route::get('redis-test',[RedisTestController::class,'index'])->name('redis-test');
+Route::get('redis-publish',[RedisTestController::class,'publish'])->name('redis-publish');

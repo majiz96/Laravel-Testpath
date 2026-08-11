@@ -13,21 +13,32 @@ class RedisTestController extends Controller
     //
     public function index()
     {
-        Cache::forget('user');
-
         DB::enableQueryLog();
 
-        $user = Cache::remember('test', 120, function () {
+        $user = Cache::remember('user', 120, function () {
             return User::find(3);
         });
 
-        $key = config('cache.prefix') . 'user';
+        $store = Cache::getStore();
 
         return [
             'user' => $user,
-            'ttl' => Redis::ttl($key),
+            'ttl' => $store->getRedis()->ttl(
+                $store->getPrefix() . 'user'
+            ),
             'queries' => DB::getQueryLog(),
         ];
+    }
 
+    public function publish()
+    {
+        return Redis::connection()->publish(
+            'notifications',
+            json_encode([
+                'type' => 'new_notification',
+                'user_id' => 3,
+                'message' => 'You have a new notification',
+            ])
+        );
     }
 }
