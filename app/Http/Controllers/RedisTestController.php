@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Redis;
 use App\Models\User;
 
@@ -42,14 +43,22 @@ class RedisTestController extends Controller
         );
     }
 
-    public function publish2()
+    public function rateLimiter()
     {
-        return Redis::connection()->publish('notifications', 'Hello World');
+        $key = 'redis_rate_test';
 
+        if(RateLimiter::tooManyAttempts($key, 5))
+        {
+            return response()->json(['message' => 'Too many attempts.'], 429);
+        }
+
+        RateLimiter::increment($key);
+
+        return response()->json([
+            'message' => 'The request accepted',
+            'attempts' => RateLimiter::attempts($key),
+        ], 429);
     }
 
-    public function publish3()
-    {
-        return Redis::connection()->publish("message", 'This is a test message');
-    }
+
 }

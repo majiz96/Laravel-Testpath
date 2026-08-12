@@ -40,5 +40,4 @@ Route::get('/testOk', function () {
 
 Route::get('redis-test',[RedisTestController::class,'index'])->name('redis-test');
 Route::get('redis-publish',[RedisTestController::class,'publish'])->name('redis-publish');
-Route::get('redis-publish2',[RedisTestController::class,'publish2'])->name('redis-publish2');
-Route::get('redis-publish3',[RedisTestController::class,'publish3'])->name('redis-publish3');
+Route::get('redis-rate',[RedisTestController::class,'rateLimiter'])->name('rate');
