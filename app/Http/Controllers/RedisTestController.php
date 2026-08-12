@@ -41,4 +41,15 @@ class RedisTestController extends Controller
             ])
         );
     }
+
+    public function publish2()
+    {
+        return Redis::connection()->publish('notifications', 'Hello World');
+
+    }
+
+    public function publish3()
+    {
+        return Redis::connection()->publish("message", 'This is a test message');
+    }
 }
