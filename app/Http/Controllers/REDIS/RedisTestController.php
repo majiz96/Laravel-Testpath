@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\REDIS;
 
+use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Redis;
-use App\Models\User;
 
 class RedisTestController extends Controller
 {
@@ -43,16 +44,16 @@ class RedisTestController extends Controller
         );
     }
 
-    public function rateLimiter()
+    public function rateLimiter(Request $request)
     {
-        $key = 'redis_rate_test';
+        $key = 'redis_rate_test'.$request->ip();
 
         if(RateLimiter::tooManyAttempts($key, 5))
         {
             return response()->json(['message' => 'Too many attempts.'], 429);
         }
 
-        RateLimiter::increment($key);
+        RateLimiter::increment($key,60);
 
         return response()->json([
             'message' => 'The request accepted',

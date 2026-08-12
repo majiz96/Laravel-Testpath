@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QueueTest;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\RedisTestController;
+use App\Http\Controllers\REDIS\RedisTestController;
+use App\Http\Controllers\REDIS\CacheTestController;
 
 use App\Livewire\Dashboard\Home;
 use App\Livewire\Test;
@@ -41,3 +42,15 @@ Route::get('/testOk', function () {
 Route::get('redis-test',[RedisTestController::class,'index'])->name('redis-test');
 Route::get('redis-publish',[RedisTestController::class,'publish'])->name('redis-publish');
 Route::get('redis-rate',[RedisTestController::class,'rateLimiter'])->name('rate');
+
+Route::get('redis-cache-training',[CacheTestController::class,'index'])->name('cache-training');
+Route::get('redis-cache-training-forget',[CacheTestController::class,'forget'])->name('cache-training-forget');
+Route::get('redis-cache-training-put',[CacheTestController::class,'put'])->name('cache-training-put');
+Route::get('redis-cache-training-get',[CacheTestController::class,'get'])->name('cache-training-get');
+Route::get('redis-cache-training-remember',[CacheTestController::class,'remember'])->name('cache-training-remember');
+Route::get('redis-cache-training-incr',[CacheTestController::class,'increment'])->name('cache-training-incr');
+Route::get('redis-cache-training-decr',[CacheTestController::class,'decrement'])->name('cache-training-decr');
+Route::get('redis-cache-training-incrby',[CacheTestController::class,'incrementBy'])->name('cache-training-incrby');
+Route::get('redis-cache-training-decr',[CacheTestController::class,'decrementBy'])->name('cache-training-decr');
+Route::get('redis-cache-training-forgetall',[CacheTestController::class,'flush'])->name('cache-training-forgetall');
+
