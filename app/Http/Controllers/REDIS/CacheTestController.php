@@ -133,4 +133,31 @@ class CacheTestController extends Controller
             'food' => Cache::get('food'),
         ]);
     }
+
+    public function tags()
+    {
+        Cache::tags(['users'])->put('all-users','User::all()',120);
+        Cache::tags(['users'])->put('first-user','User::first()',120);
+        Cache::put('last-user','User::last()',120);
+
+        return response()->json([
+            "message" => "Cache tags added successfully!",
+            'tag 1' => Cache::tags(['users'])->get('all-users'),
+            'tag 2' => Cache::tags(['users'])->get('first-user'),
+            'untags' => Cache::get('last-user')
+        ]);
+
+    }
+
+    public function tagsFlush()
+    {
+        Cache::tags(['users'])->flush();
+
+        return response()->json([
+            "message" => "Cache tags added successfully!",
+            'tag 1' => Cache::tags(['users'])->get('all-users'),
+            'tag 2' => Cache::tags(['users'])->get('first-user'),
+            'untags' => Cache::get('last-user')
+        ]);
+    }
 }
