@@ -161,29 +161,39 @@ class CacheTestController extends Controller
         ]);
     }
 
-    public function lock()
+    public function acquireLock()
     {
-        $lock = Cache::lock('redis-training-lock', 10);
+        $lock = Cache::lock('test-lock', 20);
 
-        if ($lock->get()) {
-
-            $lock->release();
-
-            return 'Lock acquired and released!';
+        if ($lock)
+        {
+            return "Locked!";
         }
 
-        return 'Lock is already taken!';
+        return "Already Locked!";
     }
 
-    public function lockTest()
+    public function releaseLock()
     {
-        $lock = Cache::lock('redis-training-lock', 10);
+        Cache::lock('test-lock', 20)->forceRelease();
 
-        if ($lock->get()) {
+        return "Released!";
+    }
 
-            return 'Lock acquired!';
-        }
+    public function lock()
+    {
+        $lock1 = Cache::lock('test-lock', 20);
+        $lock2 = Cache::lock('test-lock', 20);
 
-        return 'Lock is already taken!';
+        $first = $lock1->get();
+        $second = $lock2->get();
+
+//        $lock1->release();
+
+        return response()->json([
+            "first" => $first,
+            "second" => $second
+        ]);
+
     }
 }

@@ -59,6 +59,7 @@ Route::get('redis-cache-training-forgetall',[CacheTestController::class,'flush']
 Route::get('redis-cache-training-add',[CacheTestController::class,'add'])->name('cache-training-add');
 Route::get('redis-cache-training-tags',[CacheTestController::class,'tags'])->name('cache-training-tags');
 Route::get('redis-cache-training-tagsFlush',[CacheTestController::class,'tagsFlush'])->name('cache-training-tagsFlush');
+Route::get('redis-cache-training-acquireLock',[CacheTestController::class,'acquireLock'])->name('cache-training-acquireLock');
+Route::get('redis-cache-training-releaseLock',[CacheTestController::class,'releaseLock'])->name('cache-training-releaseLock');
 Route::get('redis-cache-training-lock',[CacheTestController::class,'lock'])->name('cache-training-lock');
-Route::get('redis-cache-training-lockTest',[CacheTestController::class,'lockTest'])->name('cache-training-lockTest');
 
