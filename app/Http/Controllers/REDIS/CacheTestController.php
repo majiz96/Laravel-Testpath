@@ -154,10 +154,36 @@ class CacheTestController extends Controller
         Cache::tags(['users'])->flush();
 
         return response()->json([
-            "message" => "Cache tags added successfully!",
+            "message" => "Cache tags flushed successfully!",
             'tag 1' => Cache::tags(['users'])->get('all-users'),
             'tag 2' => Cache::tags(['users'])->get('first-user'),
             'untags' => Cache::get('last-user')
         ]);
+    }
+
+    public function lock()
+    {
+        $lock = Cache::lock('redis-training-lock', 10);
+
+        if ($lock->get()) {
+
+            $lock->release();
+
+            return 'Lock acquired and released!';
+        }
+
+        return 'Lock is already taken!';
+    }
+
+    public function lockTest()
+    {
+        $lock = Cache::lock('redis-training-lock', 10);
+
+        if ($lock->get()) {
+
+            return 'Lock acquired!';
+        }
+
+        return 'Lock is already taken!';
     }
 }
