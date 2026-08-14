@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\REDIS;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\RedisTestJob;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -195,5 +196,11 @@ class CacheTestController extends Controller
             "second" => $second
         ]);
 
+    }
+
+    public function dispatchJob()
+    {
+        RedisTestJob::dispatch();
+        return "Dispatched!";
     }
 }

@@ -63,3 +63,5 @@ Route::get('redis-cache-training-acquireLock',[CacheTestController::class,'acqui
 Route::get('redis-cache-training-releaseLock',[CacheTestController::class,'releaseLock'])->name('cache-training-releaseLock');
 Route::get('redis-cache-training-lock',[CacheTestController::class,'lock'])->name('cache-training-lock');
 
+Route::get('redis-dispatch-job',[CacheTestController::class,'dispatchJob'])->name('dispatch-job');
+
