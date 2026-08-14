@@ -35,18 +35,6 @@ class Products extends Component
 //    public $orderBy = 'id';
 //    public $direction = 'asc';
 
-    public function mount()
-    {
-//        Cache::forget('test-products');
-//
-//        $products = Product::all()->toArray();
-//
-//        Cache::put('test-products', $products, 60);
-//
-//        $data = Cache::get('test-products');
-//
-//        dd($data);
-    }
 
     public function save()
     {
@@ -72,8 +60,6 @@ class Products extends Component
             $this->reset();
         }
 
-        Cache::forget('all-products');
-
     }
 
     public function edit(Product $product)
@@ -93,8 +79,6 @@ class Products extends Component
     public function delete(Product $product)
     {
         $product->delete();
-
-        Cache::forget('all-products');
     }
 
     #[Computed]
@@ -106,11 +90,6 @@ class Products extends Component
 
 
         return $product;
-    }
-
-    public function forget()
-    {
-        Cache::forget('all-products');
     }
 
 
