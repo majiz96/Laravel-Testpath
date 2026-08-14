@@ -56,4 +56,5 @@ Route::get('redis-cache-training-decr',[CacheTestController::class,'decrement'])
 Route::get('redis-cache-training-incrby',[CacheTestController::class,'incrementBy'])->name('cache-training-incrby');
 Route::get('redis-cache-training-decr',[CacheTestController::class,'decrementBy'])->name('cache-training-decr');
 Route::get('redis-cache-training-forgetall',[CacheTestController::class,'flush'])->name('cache-training-forgetall');
+Route::get('redis-cache-training-add',[CacheTestController::class,'add'])->name('cache-training-add');
 

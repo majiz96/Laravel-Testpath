@@ -47,6 +47,7 @@ class CacheTestController extends Controller
         $user = User::find(3);
 
         Cache::put('owner',$user,25);
+
         return response()->json([
             "message" => "Cache forgotten successfully!",
             "user" => $user->name
@@ -119,6 +120,17 @@ class CacheTestController extends Controller
         return response()->json([
             "views" => Cache::get('views'),
             "message" => "Cache decreased by 5 successfully!"
+        ]);
+    }
+
+    public function add()
+    {
+
+        Cache::add('food','Burger',120);
+
+        return response()->json([
+            "message" => "Cache added successfully!",
+            'food' => Cache::get('food'),
         ]);
     }
 }
