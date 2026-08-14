@@ -9,6 +9,8 @@ class RedisTestJob implements ShouldQueue
 {
     use Queueable;
 
+    public $tries = 3;
+
     /**
      * Create a new job instance.
      */
@@ -26,5 +28,6 @@ class RedisTestJob implements ShouldQueue
 
         \Log::info('Redis Test Job Executed!');
 
+        throw new \Exception('Redis Test Job Failed!');
     }
 }

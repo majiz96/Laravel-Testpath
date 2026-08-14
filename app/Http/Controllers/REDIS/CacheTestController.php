@@ -200,7 +200,7 @@ class CacheTestController extends Controller
 
     public function dispatchJob()
     {
-        RedisTestJob::dispatch();
-        return "Dispatched!";
+        RedisTestJob::dispatch()->delay(now()->addSeconds(20));
+        return "Dispatched after 20 seconds!";
     }
 }
