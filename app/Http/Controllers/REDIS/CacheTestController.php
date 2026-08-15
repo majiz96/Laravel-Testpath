@@ -203,4 +203,26 @@ class CacheTestController extends Controller
         RedisTestJob::dispatch()->delay(now()->addSeconds(20));
         return "Dispatched after 20 seconds!";
     }
+
+    public function reteLimit()
+    {
+        $key = 'redis-rete-limiter';
+
+        if(RateLimiter::tooManyAttempts($key, 5))
+        {
+            return response()->json([
+                "message" => "Too many attempts.",
+                "available_in" => RateLimiter::availableIn($key)." seconds"
+            ],429);
+        }
+
+        RateLimiter::hit($key,30);
+
+        return response()->json([
+            "message" => "The input accepted.",
+            "key" => $key,
+            "attempts" => RateLimiter::attempts($key),
+            "available_in" => RateLimiter::availableIn($key)." seconds",
+        ]);
+    }
 }

@@ -65,3 +65,4 @@ Route::get('redis-cache-training-lock',[CacheTestController::class,'lock'])->nam
 
 Route::get('redis-dispatch-job',[CacheTestController::class,'dispatchJob'])->name('dispatch-job');
 
+Route::get('redis-rete-limiter',[CacheTestController::class,'reteLimit'])->name('rate-limiter');
