@@ -2,7 +2,9 @@
 
 namespace App\Livewire;
 
+use App\Enums\TicketTypes;
 use App\Models\Ticket;
+use App\Models\User;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -11,34 +13,82 @@ class Tickets extends Component
 {
 
     #[Validate('required|numeric|max:3|min_digits:1')]
-    public $id;
+    public $user;
     #[Validate('required|string')]
     public $type;
-    #[Validate('required|max_digits:100|min_digits:1|unique:tickets|numeric')]
+    #[Validate('required|max:100|min:1|unique:tickets|numeric')]
     public $chair;
-    #[Validate('required|max_digits:4|numeric')]
+    #[Validate('required|max:4|numeric')]
     public $duration;
 
+    protected $updateRules = [
+        'user' => 'nullable|numeric|exists:users,id',
+        'type' => 'nullable|string',
+        'chair' => 'nullable|numeric|max:100|min:1',
+        'duration' => 'nullable|numeric|max:4',
+    ];
+
+    public $editing = false;
+
+    public function edit($id)
+    {
+        $this->editing = $id;
+
+        $ticket = Ticket::findOrFail($id);
+        $this->user = $ticket->user_id;
+        $this->type = $ticket->type;
+        $this->chair = $ticket->chair;
+        $this->duration = $ticket->duration;
+    }
+    public function cancel()
+    {
+        $this->reset('editing','type','chair','duration','user');
+    }
 
     public function save()
     {
-        $this->validate();
+        if ($this->editing)
+        {
+            $this->validate($this->updateRules);
 
-        $data = ['id' => $this->id, 'type' => $this->type, 'chair' => $this->chair, 'duration' => $this->duration];
+            $ticket = Ticket::findOrFail($this->editing);
 
-        Ticket::create($data);
+            $ticket->update([
+                'user_id' => $this->user,
+                'type' => $this->type,
+                'chair' => $this->chair,
+                'duration' => $this->duration,
+            ]);
 
-        $this->reset();
+            $this->reset('editing','type','chair','duration','user');
+        }
+        else
+        {
+            $this->validate();
+
+            Ticket::create([
+                'user_id' => $this->user,
+                'chair' => $this->chair,
+                'duration' => $this->duration,
+                'type' => $this->type,
+            ]);
+
+            $this->reset();
+        }
     }
 
-    #[Computed]
-    public function Tickets()
+    public function delete($id)
     {
-        Ticket::all()->toArray();
+        Ticket::findOrFail($id)->delete();
     }
 
     public function render()
     {
-        return view('livewire.tickets');
+
+        $tickets = Ticket::with('user')->get();
+        $types = TicketTypes::cases();
+        $users = User::all();
+
+        return view('livewire.tickets', compact('types', 'tickets', 'users'));
     }
 }
