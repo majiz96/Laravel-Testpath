@@ -1,6 +1,9 @@
 <div class="container text-center text-light">
     <h1> Ticket Check </h1>
-    <h3 class="text-danger"> </h3>
+
+    <h3 class="text-{{$noticeTheme}}"> {{$notice}} </h3>
+
+    <small class=""> {{$user ?? 'choose user'}} </small>
 
     <div class="row">
         <form class="col-5 my-5 border" wire:submit="save">
@@ -9,7 +12,8 @@
 
                 <label for="id" class="col-4"> User </label>
 
-                <select class="col-4 py-2" wire:model.blur="user">
+
+                <select class="col-4 py-2" wire:model.live="user">
                         <option value=""> Choose User </option>
                     @forelse($users as $user)
                         <option value="{{$user->id}}"> {{$user->name}} </option>
@@ -32,16 +36,18 @@
 
             <div class="row my-3">
                 <label for="type" class="col-4"> Ticket type </label>
-                <select name="type" class="col-4 py-2" wire:model.blur="type">
+
+                <select name="type" class="col-4 py-2" wire:model.live="type">
                     <option value=""> Type of ticket </option>
 
                     @if($types)
                         @foreach($types as $type)
-                            <option value="{{$type->name}}"> {{$type->value}}</option>
+                            <option value="{{$type->name}}" wire:click="checkTicket({{$user}})"> {{$type->value}}</option>
                         @endforeach
                     @endif
 
                 </select>
+
                 <div class="col-auto">@error('type') <small class="text-danger"> {{$message}} </small> @enderror</div>
             </div>
 

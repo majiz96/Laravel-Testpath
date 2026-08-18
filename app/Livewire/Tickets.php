@@ -19,8 +19,10 @@ class Tickets extends Component
     #[Validate('required|max:100|min:1|unique:tickets|numeric')]
     public $chair;
     #[Validate('required|max:4|min:1|numeric')]
-    public $duration;
 
+    public $duration;
+    public string $notice = 'test text';
+    public string $noticeTheme = 'danger';
     protected $updateRules = [
         'user' => 'nullable|numeric|exists:users,id',
         'type' => 'nullable|string',
@@ -73,7 +75,22 @@ class Tickets extends Component
                 'type' => $this->type,
             ]);
 
-            $this->reset();
+            $this->reset('editing','type','chair','duration','user','notice','noticeTheme');
+        }
+    }
+
+    public function checkTicket($id)
+    {
+        if($this->user)
+        {
+            $this->noticeTheme = "success";
+            $this->notice = "ticket selected as ".$this->type;
+        }
+        else
+        {
+            $this->noticeTheme = "danger";
+            $this->notice = "ticket not selected";
+            $this->type = "";
         }
     }
 
