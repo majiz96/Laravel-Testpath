@@ -18,14 +18,14 @@ class Tickets extends Component
     public $type;
     #[Validate('required|max:100|min:1|unique:tickets|numeric')]
     public $chair;
-    #[Validate('required|max:4|numeric')]
+    #[Validate('required|max:4|min:1|numeric')]
     public $duration;
 
     protected $updateRules = [
         'user' => 'nullable|numeric|exists:users,id',
         'type' => 'nullable|string',
         'chair' => 'nullable|numeric|max:100|min:1',
-        'duration' => 'nullable|numeric|max:4',
+        'duration' => 'nullable|numeric|max:4|min:1',
     ];
 
     public $editing = false;

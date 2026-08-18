@@ -86,7 +86,7 @@
 
             @foreach($tickets as $ticket)
                     <div class="row my-2 py-1 mx-auto border">
-                        <div class="col-2">{{$ticket->user->id}}</div>
+                        <div class="col-2">{{$ticket->user->name}}</div>
                         <div class="col-2">{{$ticket->chair}}</div>
                         <div class="col-2">{{$ticket->type}}</div>
                         <div class="col-2">{{$ticket->duration}} hour</div>
