@@ -9,6 +9,7 @@ use App\Http\Controllers\REDIS\CacheTestController;
 
 use App\Livewire\Dashboard\Home;
 use App\Livewire\Dashboard\Products;
+use App\Livewire\Tickets;
 use App\Livewire\Test;
 
 use App\Livewire\Auth\Login;
@@ -25,6 +26,7 @@ Route::get('/', function () {
 Route::get('queue-test', [QueueTest::class, 'index']);
 Route::post('queue-test',[QueueTest::class, 'send']);
 Route::get('home', Home::class)->name('home');
+Route::get('tickets', Tickets::class)->name('tickets');
 Route::get('products-management', Products::class)->name('products-management');
 //Route::get('test', Test::class)->name('test');
 

@@ -43,7 +43,7 @@ class Register extends Component
 
         session()->regenerate();
 
-//        return redirect()->route('verification.notice');\
+        return redirect()->route('verification.notice');
 
 
     }
