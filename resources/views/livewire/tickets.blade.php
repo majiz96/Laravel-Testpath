@@ -13,7 +13,7 @@
                 <label for="id" class="col-4"> User </label>
 
 
-                <select class="col-4 py-2" wire:model.live="user">
+                <select class="col-4 py-2" wire:model.live="user" wire:change="checkTicket">
                         <option value=""> Choose User </option>
                     @forelse($users as $user)
                         <option value="{{$user->id}}"> {{$user->name}} </option>
@@ -37,12 +37,12 @@
             <div class="row my-3">
                 <label for="type" class="col-4"> Ticket type </label>
 
-                <select name="type" class="col-4 py-2" wire:model.live="type">
+                <select name="type" class="col-4 py-2" wire:model.live="type" wire:change="checkTicket">
                     <option value=""> Type of ticket </option>
 
                     @if($types)
                         @foreach($types as $type)
-                            <option value="{{$type->name}}" wire:click="checkTicket({{$user}})"> {{$type->value}}</option>
+                            <option value="{{$type->name}}"> {{$type->value}}</option>
                         @endforeach
                     @endif
 

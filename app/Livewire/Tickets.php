@@ -93,17 +93,18 @@ class Tickets extends Component
             {
                 if($this->type == 'vip')
                 {
-                    $count = $service->countTickets();
-
-                    $service->countVipTickets($this->user);
+                    $count = $service->countVipTickets($this->user);
 
                     $this->noticeTheme = "warning";
                     $this->notice = $count ." "." / 4 VIP tickets";
                 }
                 else
                 {
+
+                    $userCount = $service->userTicketCount($this->user);
+
                     $this->noticeTheme = "success";
-                    $this->notice = "ticket selected as ".$this->type;
+                    $this->notice = "ticket selected as ".$this->type." ".$userCount." "." / 3 tickets";
                     $this->state = '';
                 }
 

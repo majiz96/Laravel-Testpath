@@ -26,9 +26,26 @@ class TicketService
             ->where('user_id',$userId)
             ->count();
 
+        $all = Ticket::where('type','vip')->count();
+
         if($vip >= 1)
         {
             throw new TicketLimitExceedException('Every user can have just one VIP ticket');
         }
+
+        return $all;
+
+    }
+
+    public function userTicketCount($userId)
+    {
+        $user = Ticket::where('user_id',$userId)->count();
+
+        if($user >= 3)
+        {
+            throw new TicketLimitExceedException('Every user can have just 3 ticket');
+        }
+
+        return $user;
     }
 }
