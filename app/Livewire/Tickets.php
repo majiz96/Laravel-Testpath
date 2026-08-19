@@ -5,9 +5,13 @@ namespace App\Livewire;
 use App\Enums\TicketTypes;
 use App\Models\Ticket;
 use App\Models\User;
+use App\Services\TicketService;
+use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+
+use App\Exceptions\TicketLimitExceedException;
 
 class Tickets extends Component
 {
@@ -23,6 +27,7 @@ class Tickets extends Component
     public $duration;
     public string $notice = 'test text';
     public string $noticeTheme = 'danger';
+    public string $state = '';
     protected $updateRules = [
         'user' => 'nullable|numeric|exists:users,id',
         'type' => 'nullable|string',
@@ -79,12 +84,36 @@ class Tickets extends Component
         }
     }
 
-    public function checkTicket($id)
+    public function checkTicket(TicketService $service)
     {
         if($this->user)
         {
-            $this->noticeTheme = "success";
-            $this->notice = "ticket selected as ".$this->type;
+
+            try
+            {
+                if($this->type == 'vip')
+                {
+                    $count = $service->countTickets();
+
+                    $service->countVipTickets($this->user);
+
+                    $this->noticeTheme = "warning";
+                    $this->notice = $count ." "." / 4 VIP tickets";
+                }
+                else
+                {
+                    $this->noticeTheme = "success";
+                    $this->notice = "ticket selected as ".$this->type;
+                    $this->state = '';
+                }
+
+            }
+            catch (TicketLimitExceedException $e)
+            {
+                $this->noticeTheme = "danger";
+                $this->notice = $e->getMessage();
+                $this->state = 'disabled';
+            }
         }
         else
         {
@@ -92,6 +121,9 @@ class Tickets extends Component
             $this->notice = "ticket not selected";
             $this->type = "";
         }
+
+
+
     }
 
     public function delete($id)

@@ -23,7 +23,7 @@
 
                 </select>
 
-                <div class="col-auto">@error('user') <small class="text-danger"> {{$message}} </small> @enderror</div>
+                <div class="col-auto mx-auto">@error('user') <small class="text-danger"> {{$message}} </small> @enderror</div>
             </div>
 
             <div class="row my-3">
@@ -31,7 +31,7 @@
                 <div class="col-4">
                     <input type="number" class="form-control" wire:model.blur="chair">
                 </div>
-                <div class="col-auto">@error('chair') <small class="text-danger"> {{$message}} </small> @enderror</div>
+                <div class="col-auto mx-auto">@error('chair') <small class="text-danger"> {{$message}} </small> @enderror</div>
             </div>
 
             <div class="row my-3">
@@ -48,7 +48,7 @@
 
                 </select>
 
-                <div class="col-auto">@error('type') <small class="text-danger"> {{$message}} </small> @enderror</div>
+                <div class="col-auto mx-auto">@error('type') <small class="text-danger"> {{$message}} </small> @enderror</div>
             </div>
 
             <div class="row my-3">
@@ -57,17 +57,17 @@
                     <input type="number" class="form-control" name="duration" wire:model.blur="duration">
                 </div>
                 <label for="duration" class="col-4"> hour </label>
-                <div class="col-auto">@error('duration') <small class="text-danger"> {{$message}} </small> @enderror</div>
+                <div class="col-auto mx-auto">@error('duration') <small class="text-danger"> {{$message}} </small> @enderror</div>
             </div>
 
 
             <div class="row my-3">
 
                 @if($editing)
-                    <button type="submit" class="col-2 mx-auto w-4 btn btn-primary">update</button>
+                    <button type="submit" class="col-2 mx-auto w-4 btn btn-primary" {{$state}}>update</button>
                     <button type="button" class="col-2 mx-auto w-4 btn btn-warning" wire:click="cancel">cancel</button>
                 @else
-                    <button type="submit" class="col-2 mx-auto w-4 btn btn-primary">save</button>
+                    <button type="submit" class="col-2 mx-auto w-4 btn btn-primary" {{$state}}>save</button>
                 @endif
 
 
