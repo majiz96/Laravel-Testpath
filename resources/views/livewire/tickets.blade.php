@@ -6,6 +6,10 @@
     <small class=""> {{$user ?? 'choose user'}} </small>
 
     <div class="row">
+        <button class="btn btn-info w-auto" wire:click="logTest"> take log </button>
+    </div>
+
+    <div class="row">
         <form class="col-5 my-5 border" wire:submit="save">
 
             <div class="row my-3">

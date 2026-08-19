@@ -8,6 +8,8 @@ use App\Http\Controllers\API\TeamsController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\DocumentController;
 
+use App\Exceptions\TicketLimitExceedException;
+
 Route::get('/posts',[PostController::class,'index']);
 Route::get('/posts/{post}',[PostController::class,'show']);
 
@@ -42,3 +44,6 @@ Route::post('/register',[AuthController::class,'register'])->name('register');
 Route::post('/login',[AuthController::class,'login'])->name('login');
 
 
+Route::get('/test-exception', function () {
+    throw new TicketLimitExceedException('VIP limit reached');
+});

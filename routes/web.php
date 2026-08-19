@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Exceptions\TicketLimitExceedException;
+
 use App\Http\Controllers\QueueTest;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\REDIS\RedisTestController;
@@ -68,3 +70,9 @@ Route::get('redis-cache-training-lock',[CacheTestController::class,'lock'])->nam
 Route::get('redis-dispatch-job',[CacheTestController::class,'dispatchJob'])->name('dispatch-job');
 
 Route::get('redis-rete-limiter',[CacheTestController::class,'reteLimit'])->name('rate-limiter');
+
+Route::get('/test-exception', function () {
+    throw new TicketLimitExceedException(
+        'VIP limit reached'
+    );
+});

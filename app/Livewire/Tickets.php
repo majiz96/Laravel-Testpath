@@ -125,6 +125,15 @@ class Tickets extends Component
 
 
     }
+    public function logTest()
+    {
+        $content=Ticket::first()->user->name;
+
+        Log::info('STACK TEST');
+
+        $this->noticeTheme = "success";
+        $this->notice = "logged successfully";
+    }
 
     public function delete($id)
     {

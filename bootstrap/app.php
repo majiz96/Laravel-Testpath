@@ -25,15 +25,17 @@ return Application::configure(basePath: dirname(__DIR__))
             fn (Request $request) => $request->is('api/*'),
         );
 
-        $exceptions->report(function (TicketLimitExceedException $e)
-        {
-            Log::error('Ticket Error',[$e->getMessage()]);
+//        $exceptions->report(function (TicketLimitExceedException $e)
+//        {
+//            Log::channel('exceptions')->warning('Ticket Error', [
+//                'message' => $e->getMessage(),
+//            ]);
+//
+//            return false;
+//        });
 
-            return false;
-        });
-
-        $exceptions->render(function (TicketLimitExceedException $e) {
-            return response($e->getMessage(), 422);
-        });
+//        $exceptions->render(function (TicketLimitExceedException $e) {
+//            return response($e->getMessage(), 422);
+//        });
 
     })->create();
