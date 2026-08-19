@@ -89,8 +89,7 @@ class Tickets extends Component
         if($this->user)
         {
 
-            try
-            {
+
                 if($this->type == 'vip')
                 {
                     $count = $service->countVipTickets($this->user);
@@ -108,13 +107,13 @@ class Tickets extends Component
                     $this->state = '';
                 }
 
-            }
-            catch (TicketLimitExceedException $e)
-            {
-                $this->noticeTheme = "danger";
-                $this->notice = $e->getMessage();
-                $this->state = 'disabled';
-            }
+
+//            catch (TicketLimitExceedException $e)
+//            {
+//                $this->noticeTheme = "danger";
+//                $this->notice = $e->getMessage();
+//                $this->state = 'disabled';
+//            }
         }
         else
         {
