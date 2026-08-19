@@ -76,3 +76,7 @@ Route::get('/test-exception', function () {
         'VIP limit reached'
     );
 });
+
+Route::get('/test-error', function () {
+    throw new Exception('This is a secret internal error');
+});
