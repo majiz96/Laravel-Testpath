@@ -78,5 +78,5 @@ Route::get('/test-exception', function () {
 });
 
 Route::get('/test-error', function () {
-    throw new Exception('This is a secret internal error');
+    abort(404);
 });
