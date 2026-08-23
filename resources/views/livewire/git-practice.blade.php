@@ -7,6 +7,8 @@
 
     <p>Version 3 - Feature Branch</p>
 
-    <h1>TEST BRANCH</h1>
+    <h1> <span class="{{ $count >= 7 ? 'text-danger' : '' }}"> {{$count}} </span> / 10 </h1>
+
+    <button class="btn btn-primary w-auto" wire:click="increment"> increment </button>
 
 </div>
