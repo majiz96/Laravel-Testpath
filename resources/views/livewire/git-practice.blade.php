@@ -13,4 +13,6 @@
 
     <p> This is Master branch </p>
 
+    <p>Master changes before rebase.</p>
+
 </div>
