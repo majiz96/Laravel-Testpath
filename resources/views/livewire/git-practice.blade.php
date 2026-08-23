@@ -6,4 +6,7 @@
     <p>Learning Git with Laravel and PhpStorm.</p>
 
     <p>Version 3 - Feature Branch</p>
+
+    <h1>TEST BRANCH</h1>
+
 </div>
