@@ -11,4 +11,6 @@
 
     <button class="btn btn-primary w-auto" wire:click="increment"> increment </button>
 
+    <p> Update Master </p>
+
 </div>
