@@ -3,7 +3,7 @@
 
     <p>Version 1</p>
 
-    <p>Learning Git professionally with Laravel and PhpStorm.</p>
+    This branch has conflicts that must be resolved
 
     <p>Version 3 - Feature Branch</p>
 </div>
