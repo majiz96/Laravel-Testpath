@@ -11,9 +11,11 @@
 
     <button class="btn btn-primary w-auto" wire:click="increment"> increment </button>
 
-    <p> This is Master branch </p>
+    <h1>Hello</h1>
 
-    <p>Master changes before rebase.</p>
-    <p>Master Not changed yet.</p>
+    <h2>This Is</h2>
 
+    <h3>Rebase Test By</h3>
+
+    <h3>GUI</h3>
 </div>
