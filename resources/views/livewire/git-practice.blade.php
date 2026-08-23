@@ -3,7 +3,7 @@
 
     <p>Version 1</p>
 
-    <p>Learning Git with Laravel and PhpStorm.</p>
+    <p>Learning Git professionally with Laravel and PhpStorm.</p>
 
     <p>Version 3 - Feature Branch</p>
 </div>
