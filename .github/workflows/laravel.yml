@@ -17,7 +17,7 @@ jobs:
       - name: Check project files
         run: |
           echo "Checking Laravel project..."
-          test -f artiban
+          test -f artisan1234
           test -f composer.json
 
 
