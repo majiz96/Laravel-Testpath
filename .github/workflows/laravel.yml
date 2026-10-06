@@ -95,6 +95,9 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
 
+    env:
+      DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+
     steps:
       - uses: actions/download-artifact@v4
         with:
@@ -105,3 +108,12 @@ jobs:
         run: |
           echo "Downloaded artifact:"
           ls -la public/build
+          
+      - name: Chack Deploy Secret
+        run: |
+          if [ -n "$DEPLOY_TOKEN" ]; then
+            echo "secret deployed successfully";
+          else
+            echo "secret is missing"
+            exit 1
+          fi
