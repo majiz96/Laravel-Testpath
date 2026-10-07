@@ -111,9 +111,9 @@ jobs:
           ls -la public/build
           
       - name: Simulate Deploy
-      run: |
-        curl -f -X POST "$DEPLOY_WEBHOOK_URL" \
-        -H "Authorization: Bearer $DEPLOY_TOKEN" \
-        -H "Content-Type: application/json" \
-        -d '{"project":"Laravel-Testpath","status":"deploying"}'
+        run: |
+          curl -f -X POST "$DEPLOY_WEBHOOK_URL" \
+            -H "Authorization: Bearer $DEPLOY_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{"project":"Laravel-Testpath","status":"deploying"}'
         
